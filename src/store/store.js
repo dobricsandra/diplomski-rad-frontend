@@ -1,22 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import router from 'vue-router';
 Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         idToken: null,
-        isAuth: null,
-        isAdmin: null,
+        isAdmin: 0,
         isInstructor: null,
         userId: null,
-        instructorId: null
+        instructorId: null,
+        user: null
     },
     mutations: {
         authUser(state, userData) {
-            state.idToken = userData.token,
-            state.userId = userData.userId,
-            state.isAdmin = userData.isAdmin
-            console.log(state.idToken);
+            state.idToken = userData.token;
+            state.userId = userData.userId;
+            state.isAdmin = userData.isAdmin;
+        },
+        storeUser(state, user) {
+            state.user = user;
         }
     },
     actions: {
@@ -29,10 +32,35 @@ export const store = new Vuex.Store({
                     userId: resData.data.userId,
                     isAdmin: resData.data.isAdmin
                 });
-                
+                return axios.get('/userDetails/' + this.state.userId) 
             })
-                .catch(err => console.log(err));
-            console.log(email, password);
+            .then(resData => {
+                const user = resData.data;
+                console.log(user);
+                commit('storeUser', user);
+                if (store.state.idToken) {
+                    console.log(store.state.idToken);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.state.idToken;
+                  }
+            })
+                
+            .catch(err => console.log(err));
+         
+        },
+      
+    },
+    getters: {
+        user(state) {
+            return state.user;
+        },
+        isAuth(state){
+            return state.idToken !== null;
+        },
+        isAdministrator(state){
+            return state.isAdmin != 1;
+        },
+        isInstructor(state){
+            return state.isInstructor != null;
         }
     }
 });

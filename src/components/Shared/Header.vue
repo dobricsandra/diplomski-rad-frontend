@@ -5,14 +5,14 @@
     </div>
     <nav class="nav">
       <ul class="nav_ul">
-        <router-link active-class="active" tag="li" to="/login" exact>Prijava</router-link>
+        <router-link active-class="active" tag="li" to="/login" exact v-if="!auth">Prijava</router-link>
         <router-link
           active-class="active"
           tag="li"
           to="/create-instructor-profile"
           exact
         >Postani instruktor</router-link>
-        <router-link active-class="active" tag="li" to="/signup" exact>Registracija</router-link>
+        <router-link active-class="active" tag="li" to="/signup" exact v-if="!auth">Registracija</router-link>
         <router-link active-class="active" tag="li" to="/help" exact>Pomoć</router-link>
       </ul>
     </nav>
@@ -20,7 +20,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    auth(){
+      
+      console.log(this.$store.getters.isAuth);
+      return this.$store.getters.isAuth;
+      }
+  }
+};
 </script>
 
 <style scoped>

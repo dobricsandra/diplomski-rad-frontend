@@ -12,6 +12,21 @@ const router = new VueRouter({
 });
 
 axios.defaults.baseURL = "http://localhost:3000";
+axios.interceptors.request.use(
+  (config) => {
+    let token = store.state.idToken;
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${ token }`;
+    }
+
+    return config;
+  }, 
+
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 new Vue({
   el: '#app',

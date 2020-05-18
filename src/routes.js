@@ -3,6 +3,8 @@ import Search from './components/Search.vue';
 import SearchResults from './components/SearchResults.vue';
 import Login from './components/Login.vue';
 import Help from './components/Help.vue';
+
+import {store} from './store/store.js';
 //import InstructorDetails from '/.components/InstructorDetails.vue';
 
 // if we want lazy loading - load when needed, not everything at the beginning, then we'll use:
@@ -20,6 +22,13 @@ export const routes = [
     //{ path: '/instructor-profile/:id', component: InstructorDetails},
     { path: '/searchResults/:id', component: SearchResults },
     { path: '/login', component: Login },
-    {path: '/help', component: Help},
+    {path: '/help', component: Help, beforeEnter(to, from, next) {
+        if(store.state.idToken) {
+            next();
+        }
+        else {
+            next('/login');
+        }
+    }},
     {path: '*', redirect:'/'}
 ];
