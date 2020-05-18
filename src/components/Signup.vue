@@ -12,7 +12,7 @@
       <input type="text" v-model="surname" required />
       <label>Broj mobitela:</label>
       <input type="text" placeholder="npr. 0912512969" v-model="phoneNumber" required />
-      <label>Studiram/studirao sam na ...:</label>
+      <label>Studiram/studirao sam na...:</label>
       <select v-model="facultyId">
         <option
           v-for="(faculty, i) in faculties"
