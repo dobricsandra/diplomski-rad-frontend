@@ -39,6 +39,7 @@ import axios from "axios";
 
 export default {
   created() {
+    // fill faculty dropdown menu with values
     axios
       .get("/faculty")
       .then(resData => {
@@ -50,6 +51,7 @@ export default {
         this.faculties = faculties;
       })
       .catch(err => console.log(err));
+    // fill city dropdown menu with values
     axios
       .get("/city")
       .then(resData => {
@@ -73,8 +75,6 @@ export default {
       cityId: "",
       faculties: [],
       cities: [],
-      userCreatedMessage: ""
-      
     };
   },
   methods: {
@@ -85,7 +85,7 @@ export default {
         name: this.name,
         surname: this.surname,
         phoneNumber: this.phoneNumber,
-        picture: "blabla",
+        picture: "blabla", // TODO: change this both here and in API
         facultyId: this.facultyId,
         cityId: this.cityId
       };

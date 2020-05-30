@@ -1,69 +1,68 @@
 <template>
   <div>
-    <div class="instructions_result_item">
-      <h4>{{user.name}} {{user.surname}}</h4>
-      <p>{{degreeAbbreviation}}, {{user.facultyId}}</p>
+      <div class="instructions_result_item">
+      <h4>{{instructor.user.name}} {{instructor.user.surname}} </h4>
+      <p>{{instructor.user.faculty.abbreviation}}, {{instructor.degree.abbreviation}} </p>
 
       <img
         src="https://cdn3.vectorstock.com/i/1000x1000/08/37/profile-icon-male-user-person-avatar-symbol-vector-20910837.jpg"
       />
       <p>{{averageMark}}</p>
-      <a :href="href">Više...</a>
-    </div>
+      <button @click="submit">Više...</button>
+      </div>
+   
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import InstructorProfile from './InstructorProfile.vue';
 export default {
-  props: ["instructor"],
+  props: ["instructorId"],
   created() {
-    console.log(this.instructor.userId);
     axios
-      .get("/user/" + this.instructor.userId)
+      .get("/instructor/" + this.instructorId)
       .then(resData => {
-        console.log(resData);
-        this.user = resData.data;
-        console.log(this.user.name);
-      })
-      .catch(err => console.log(err));
-    axios
-      .get("/degree/" + this.instructor.degreeId)
-      .then(resData => {
-        console.log(resData);
-        this.degreeAbbreviation = resData.data.abbreviation;
-      })
-      .catch(err => console.log(err));
-
-    axios
-      .get("/review/" + this.instructor.id)
-      .then(resData => {
-        let review = 0;
-        let counter = 0;
-
-        for (let id in resData.data) {
-          review = resData.data[id].reviewMark + review;
+        this.instructor = resData.data;
+        this.instructorId = this.instructor.id;
+        //very important, elseway it will be NaN (interpreted as string)
+        let review=0;
+        let counter=0;
+        if(this.instructor.reviews[0] != null) {
+         for (let id in this.instructor.reviews) {
+          review = this.instructor.reviews[id].reviewMark + review;
           counter++;
         }
+     
+          console.log(review);
         this.averageMark = (review / counter).toFixed(2);
-        console.log(this.averageMark);
+        }
+        else{
+          this.averageMark = "Nema ocjenu!";
+        }
       })
-      .catch(err => {
-        console.log(err);
-        this.averageMark = "Nema ocjenu!";
-      });
+      .catch(err => console.log(err));
   },
   destroyed() {
     this.user = {};
   },
   data() {
     return {
-      user: {},
-      averageMark: "",
-      facultyAbbreviation: "",
-      degreeAbbreviation: "",
-      href: "instructor_profile/" + this.instructor.id
-    };
+      instructor: { 
+        user: {
+          faculty: {}
+        },
+        degree: {},
+        reviews: []
+      },
+      averageMark: ""
+  
+      };
+  },
+  methods: {
+    submit(){
+      this.$router.push('/instructor-profile/' + this.instructorId) //TODO: fix this!
+    }
   }
 };
 </script>

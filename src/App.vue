@@ -2,9 +2,6 @@
   <div id="app">
     <app-header></app-header>
     <main> 
-      <!-- <app-signup> </app-signup> -->
-      <!-- <app-search> </app-search> -->
-      <!-- <app-search-results></app-search-results> -->
       <router-view></router-view>
     </main>
     
@@ -13,22 +10,14 @@
 
 <script>
 import Header from './components/Shared/Header.vue';
-import Signup from './components/Signup.vue';
-import Search from './components/Search.vue';
-import SearchResults from './components/SearchResults.vue';
 
 export default {
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   components: {
-    'app-header': Header,
-    'app-signup': Signup,
-    'app-search': Search,
-    'app-search-results': SearchResults
+    'app-header': Header
+  },
+  created() {
+    this.$store.dispatch('tryAutoLogin');
   }
 }
 </script>

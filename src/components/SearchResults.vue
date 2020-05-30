@@ -3,7 +3,7 @@
     <h3>Dostupni danas</h3>
     <div class="result_row">
       <div v-for="(instructor, i) in instructors" v-bind:key="i">
-        <app-instructor-thumbnail :instructor="instructor"></app-instructor-thumbnail>
+        <app-instructor-thumbnail :instructorId="instructor.id"></app-instructor-thumbnail>
       </div>
       <a>Pogledaj sve ></a>
     </div>
@@ -44,9 +44,7 @@ export default {
 
   data() {
     return {
-      instructors: [],
-      instructorId: "",
-      instructorUserId: ""
+      instructors: []
     };
   },
   components: {

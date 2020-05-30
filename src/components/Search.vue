@@ -37,6 +37,7 @@ import axios from "axios";
 
 export default {
   created() {
+    // fill faculty dropdown menu with values
     axios
       .get("/faculty")
       .then(resData => {
@@ -48,6 +49,7 @@ export default {
         this.faculties = faculties;
       })
       .catch(err => console.log(err));
+    // fill city dropdown menu with values
     axios
       .get("/city")
       .then(resData => {
@@ -73,6 +75,7 @@ export default {
     };
   },
   methods: {
+    // fill course dropdown menu with values
     getCourses() {
       console.log(this.facultyId);
       axios
