@@ -24,7 +24,7 @@ import Faculty from "./Faculty.vue";
 export default {
   created() {
     axios
-      .get("/faculty")
+      .get("/faculties")
       .then(resData => {
         const faculties = [];
         console.log(resData.data.id);
@@ -35,7 +35,7 @@ export default {
       })
       .catch(err => console.log(err));
         axios
-      .get("/city")
+      .get("/cities")
       .then(resData => {
         const cities = [];
         console.log(resData.data.id);
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
       addNewFaculty() {
-          axios.post('/admin/faculty', { name:this.facultyName, abbreviation:this.facultyAbbreviation, cityId:this.cityId })
+          axios.post('/admin/faculties', { name:this.facultyName, abbreviation:this.facultyAbbreviation, cityId:this.cityId })
           .then(resData => {console.log(resData);
             this.addMode=false;
             this.faculties.push({id:resData.data.id, name:this.facultyName, abbreviation:this.abbreviation, cityId:this.cityId});

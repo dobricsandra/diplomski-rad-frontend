@@ -41,7 +41,7 @@ export default {
   created() {
     // fill faculty dropdown menu with values
     axios
-      .get("/faculty")
+      .get("/faculties")
       .then(resData => {
         const faculties = [];
         console.log(resData.data.id);
@@ -53,7 +53,7 @@ export default {
       .catch(err => console.log(err));
     // fill city dropdown menu with values
     axios
-      .get("/city")
+      .get("/cities")
       .then(resData => {
         const cities = [];
         console.log(resData.data.id);
@@ -85,7 +85,7 @@ export default {
         name: this.name,
         surname: this.surname,
         phoneNumber: this.phoneNumber,
-        picture: "blabla", // TODO: change this both here and in API
+        picture: "https://cdn4.iconfinder.com/data/icons/avatars-circle-2/72/146-512.png", // TODO: change this both here and in API
         facultyId: this.facultyId,
         cityId: this.cityId
       };

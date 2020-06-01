@@ -44,7 +44,7 @@ import Calendar from './Calendar.vue';
 export default {
   created() {
     axios
-      .get("/instructor/" + this.instructorId)
+      .get("/instructors/" + this.instructorId)
       .then(resData => {
         this.instructorDetails = resData.data;
         //very important, elseway it will be NaN (interpreted as string)

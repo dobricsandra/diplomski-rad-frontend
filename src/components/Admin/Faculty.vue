@@ -26,7 +26,7 @@ export default {
   props: ['faculty'],
   created() {
       axios
-      .get("/city")
+      .get("/cities")
       .then(resData => {
         const cities = [];
         console.log(resData.data.id);
@@ -45,14 +45,14 @@ export default {
   },
   methods: {
       editFaculty() {
-          axios.post('/admin/faculty/' + this.faculty.id, {name:this.faculty.name, abbreviation:this.faculty.abbreviation, cityId:this.faculty.cityId})
+          axios.post('/admin/faculties/' + this.faculty.id, {name:this.faculty.name, abbreviation:this.faculty.abbreviation, cityId:this.faculty.cityId})
           .then(resData =>{
               this.editMode = false;
           })
           .catch(err=>console.log(err)) 
       },
       deleteFaculty() {
-          axios.delete('/admin/faculty', { data: { id: this.faculty.id }}) // delete method expects special format for body
+          axios.delete('/admin/faculties', { data: { id: this.faculty.id }}) // delete method expects special format for body
           .then(resData => {
               console.log(resData);
               //this.$destroy();

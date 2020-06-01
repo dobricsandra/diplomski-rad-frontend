@@ -85,12 +85,14 @@ export default {
              if (month < 10) {
             month = "0" + month;
             }
-            startTime=hour + ""+ ""+day +""+ month +""+ year;
+            startTime= year+""+ month+""+day+""+hour;
 
             for(let id in this.instructorDetails.terms){
                 if (this.instructorDetails.terms[id].reservationId == null){
-                    document.getElementById(this.instructorDetails.terms[id].startTime).style.backgroundColor = "white";
-                    document.getElementById(this.instructorDetails.terms[id].startTime).disabled = true;
+                    console.log(this.instructorDetails.terms[id].startTime);
+                    if(document.getElementById(this.instructorDetails.terms[id].startTime)){
+                        document.getElementById(this.instructorDetails.terms[id].startTime).style.backgroundColor = "white";
+                    }
                 }
             }
             return startTime;
@@ -105,10 +107,10 @@ export default {
              if (month < 10) {
             hour = "0" + hour;
             }
-            const startTime=hour + ""+ ""+day +""+ month +""+ year;
+            const startTime= year + ""+ month + ""+ day +""+hour;
             let reservationId;
             this.showReservationMessage = false;
-            axios.post('/reservation', {comment: this.comment, courseId:this.courseId})
+            axios.post('/reservations', {comment: this.comment, courseId:this.courseId})
             .then(resData => {
                 console.log(resData);
                 reservationId=resData.data.id;

@@ -1,18 +1,29 @@
 <template>
+<div>
   <nav>
     <ul class="nav_ul">
-      <router-link active-class="active" tag="li" to="/home/edit-profile" exact>Uredi profil</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-reservations" exact>Rezervacije</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Instruktorske stranice</router-link>
-    </ul>
-    <router-view></router-view>
+      <div>
+      <router-link active-class="active" tag="li" to="/home/my-reservations" exact>Moje rezervacije</router-link>
+      <router-link active-class="active" tag="li" to="/home/edit-profile" exact>Uredi korisnički profil</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="!isInstructor()">Postani instruktor!</router-link>
+      </div>
+      <div>
+      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Uredi instruktorski profil</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Kalendar i rezervacije</router-link>
+      <!-- <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Instruktorske stranice</router-link> -->
+      </div>
+   </ul>
   </nav>
+  <router-view></router-view>
+</div>
 </template>
 
 <script>
 export default {
   methods: {
       isInstructor(){
+        console.log(this.$store.state.instructorId);
+        console.log(this.$store.getters.isInstructor);
           return this.$store.getters.isInstructor;
       }
   }
@@ -23,6 +34,7 @@ export default {
 
 .nav_ul li:active,
 .active {
+  background-color: orangered;
   text-decoration: underline;
   color: black;
   font-weight: bold;
@@ -30,23 +42,42 @@ export default {
 nav {
   width: 100%;
   vertical-align: bottom;
-  margin: auto;
+  margin: 0px;
+  padding-bottom: 40px;
 }
 
 .nav_ul {
   list-style-type: none;
-  margin: 1.5% 1%;
   text-align: center;
+  margin:0px;
 }
 .nav_ul li {
-    background-color: rgb(247, 117, 66);
+    background-color: rgba(198, 56, 63, 0.8);
     padding: 15px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px lightgray solid;
 }
+
+.nav_ul li:hover {
+    background-color: rgb(255, 69, 0, 0.9);
+}
+
 .nav_ul li, button {
   display: inline;
-  margin-right: 4%;
   cursor: pointer;
 }
+nav ul div {
+  display: flex;
+}
+nav ul div:first-of-type {
+  float:left;
+}
+nav ul div:last-of-type {
+  float:right;
+}
+nav ul {
+  padding-left: 0px;
+}
+
 </style>

@@ -22,17 +22,19 @@ export default new Vuex.Store({
             state.userId = userData.userId;
             state.isAdmin = userData.isAdmin;
         },
+        // check is currently logged in user instructor so instructor pages can be shown to him
         isInstructor(state, instructorId){
             state.instructorId = instructorId;
         },
         clearAuthData(state) {
+            state.instructorId = null,
             state.idToken = null,
             state.userId = null,
-            state.isInstructor = null,
             state.isAdmin = null
         }
     },
     actions: {
+        // JWT token is valid for 1h
         setLogoutTimer({ commit }, expirationTime) {
             setTimeout(() => {
                 commit('clearAuthData');
@@ -47,25 +49,34 @@ export default new Vuex.Store({
                         userId: resData.data.userId,
                         isAdmin: resData.data.isAdmin
                     });
+                    
+                    dispatch('checkIsInstructor');
+
+                    // set Authorization header for requests from this user
                     if (state.idToken) {
                         console.log(state.idToken);
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.idToken;
                     }
-                    router.replace('/home');
 
+                    // calculate expiration datetime for JWT token
                     const now = Date();
                     const nowInSeconds = new Date(now).getTime();
                     const expirationInSeconds = nowInSeconds + Number(resData.data.expiresIn) * 1000;
                     const expirationDate = new Date(expirationInSeconds);
 
+                    // save user data to local storage so the user will stay logged after refreshing the page
                     localStorage.setItem('token', resData.data.token);
                     localStorage.setItem('expirationDate', expirationDate);
                     localStorage.setItem('userId', resData.data.userId);
                     localStorage.setItem('isAdmin', resData.data.isAdmin);
 
                     dispatch('setLogoutTimer', resData.data.expiresIn);
+
+                    // when logged in, redirect user to homepage with list of his reservations
+                    router.replace('/home/my-reservations');
                 }).catch(err => console.log(err))
         },
+        // when user refreshes the page, keep him logged in
         tryAutoLogin({ commit, dispatch, state }) {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -74,7 +85,7 @@ export default new Vuex.Store({
 
             const expirationDate = localStorage.getItem('expirationDate');
             const now = Date();
-            if (now >= expirationDate) { // TODO: this doesnt work. why?
+            if (now >= expirationDate) { // TODO: this is correct, but doesn't work. why?
             // return;
             }
 
@@ -85,18 +96,20 @@ export default new Vuex.Store({
                 token: token,
                 userId: userId,
                 isAdmin: isAdmin
-            }); 
-            dispatch('checkIsInstructor');    
+            });  
         },
         checkIsInstructor({commit}) {
             axios.get('/isUserInstructor')
                 .then( resData => {
-                    commit('isInstructor', {
-                        instructorId: resData.data.instructorId
-                    });
-                    console.log(resData.data.instructorId);
+                    console.log( resData.data.instructorId);
+                    // if received instructorId is null, do nothing and let it stay null
+                    if(resData.data.instructorId){
+                        commit('isInstructor', {
+                            instructorId: resData.data.instructorId
+                        });
+                    }
                 })
-                .catch()
+                .catch(err => console.log(err))
         },
         logout({ commit }) {
             commit('clearAuthData');
@@ -117,7 +130,7 @@ export default new Vuex.Store({
         isInstructor(state) {
             return state.instructorId != null;
         },
-        getInstructorId(state) {
+        getInstructorId(state) { // TODO: this is redundancy because we can get instructorId by accessing this.$store.state
             console.log(state.instructorId);
             return state.instructorId;
         }

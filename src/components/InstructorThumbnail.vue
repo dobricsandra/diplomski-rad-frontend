@@ -21,7 +21,7 @@ export default {
   props: ["instructorId"],
   created() {
     axios
-      .get("/instructor/" + this.instructorId)
+      .get("/instructors/" + this.instructorId)
       .then(resData => {
         this.instructor = resData.data;
         this.instructorId = this.instructor.id;

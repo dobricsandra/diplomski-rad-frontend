@@ -46,14 +46,14 @@ import InstructorCourses from './InstructorCourses.vue';
 export default {
   created() {
      axios
-      .get("/instructor/" + this.$store.getters.getInstructorId.instructorId)
+      .get("/instructors/" + this.$store.getters.getInstructorId.instructorId)
       .then(resData => {
         this.instructorDetails = resData.data;
       })
       .catch(err => console.log(err));
 
       axios
-       .get('/degree')
+       .get('/degrees')
        .then(resData => {
            const degrees = [];
             for (let id in resData.data) {
@@ -76,7 +76,7 @@ export default {
   methods: {
       saveInstructorData(){
 
-      axios.post('/instructor/' + this.instructorDetails.id, {address: this.instructorDetails.address, description: this.instructorDetails.description, degreeId: this.instructorDetails.degree.id })
+      axios.post('/instructors/' + this.instructorDetails.id, {address: this.instructorDetails.address, description: this.instructorDetails.description, degreeId: this.instructorDetails.degree.id })
       .then(resData =>
       {
           console.log(resData);

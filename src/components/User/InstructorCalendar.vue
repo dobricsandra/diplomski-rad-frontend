@@ -46,7 +46,6 @@ export default {
             this.next7Days.push(dayObject);
         }
         console.log(this.next7Days);
-    
     },
       data(){
         return {
@@ -55,7 +54,7 @@ export default {
         }
     },
     methods: {
-        calculateId(hour, day, month, year){
+       calculateId(hour, day, month, year){
             let startTime ="";
             if (hour < 10) {
             hour = "0" + hour;
@@ -66,27 +65,23 @@ export default {
              if (month < 10) {
             month = "0" + month;
             }
-            startTime=hour + ""+ ""+day +""+ month +""+ year;
-            return startTime;
-        },
-        // showModal() {
-        //     this.startTime =  event.target.id;
-        //     console.log(this.startTime);
-        // },
-        // getAllTermsForUser() {
-        //     axios.get('/term/'+this.instructorDetails.id)
-        //     .then(resData => {
-        //         //console.log(resData.data)
-        //         return resData.data;
-        //     })
-        //     .catch(err => console.log(err))
-        // }
+            startTime=year + ""+ month + ""+ day +""+hour;
+            if(this.instructorDetails.terms.length > 0){
+                    if(this.instructorDetails.terms.some(term => term.startTime == startTime)){
+                        return  ({id: startTime, status: 1}); // this means it is a free term
+                    }
+                    else {
+                         return ({id: startTime, status: 3}); // this means it is an unvailable term
+                    }
+             }
+             else {
+                 return ({id: startTime, status: 3}); // this means it is an unvailable term
+             } 
+        }
     },
     components: {
         'app-term': Term
-    }
-
-    
+    }  
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="instructions_results">
+  <div class="user-page-wrapper">
     <app-user-navigation></app-user-navigation>
   </div>
 </template>
@@ -19,11 +19,10 @@ export default {
 };
 </script>
 <style scoped>
-.instructions_results {
-  background-color: white;
-  opacity: 0.90;
+.user-page-wrapper {
+  background-color: rgba(255, 255, 255, 0.9);
   width: 85%;
   margin: 1% auto;
-  padding: 3%;
+  padding: 2% 4%;
 }
 </style>

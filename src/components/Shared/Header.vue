@@ -9,12 +9,6 @@
         <button active-class="active" @click="onLogout" exact v-if="auth==true">Odjava</button>
         <router-link active-class="active" tag="li" to="/" exact>Početna</router-link>
         <router-link active-class="active" tag="li" to="/admin/" exact v-if="admin==true">Administrator</router-link>
-        <router-link
-          active-class="active"
-          tag="li"
-          to="/create-instructor-profile"
-          exact
-        >Postani instruktor</router-link>
         <router-link active-class="active" tag="li" to="/signup" exact v-if="!auth">Registracija</router-link>
         <router-link active-class="active" tag="li" to="/home" exact v-if="auth">Moj profil</router-link>
         <router-link active-class="active" tag="li" to="/help" exact>Pomoć</router-link>
@@ -25,6 +19,7 @@
 
 <script>
 export default {
+ 
   computed: {
     auth(){
       console.log(this.$store.getters.isAuth);

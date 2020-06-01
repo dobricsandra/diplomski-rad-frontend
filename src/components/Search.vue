@@ -39,7 +39,7 @@ export default {
   created() {
     // fill faculty dropdown menu with values
     axios
-      .get("/faculty")
+      .get("/faculties")
       .then(resData => {
         const faculties = [];
         console.log(resData.data.id);
@@ -51,7 +51,7 @@ export default {
       .catch(err => console.log(err));
     // fill city dropdown menu with values
     axios
-      .get("/city")
+      .get("/cities")
       .then(resData => {
         const cities = [];
         console.log(resData.data.id);
@@ -79,7 +79,7 @@ export default {
     getCourses() {
       console.log(this.facultyId);
       axios
-        .get("/coursesOnFaculty/" + this.facultyId)
+        .get("/faculties/" + this.facultyId+"/courses")
         .then(resData => {
           this.isDisabled = false;
           const courses = [];

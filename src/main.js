@@ -22,7 +22,7 @@ axios.interceptors.request.use(
 
 new Vue({
   el: '#app',
-  router,
+  router, // it can also be written as router:router
   store,
   render: h => h(App)
 })
