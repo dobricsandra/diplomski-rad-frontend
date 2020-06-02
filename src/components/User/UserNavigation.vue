@@ -5,11 +5,12 @@
       <div>
       <router-link active-class="active" tag="li" to="/home/my-reservations" exact>Moje rezervacije</router-link>
       <router-link active-class="active" tag="li" to="/home/edit-profile" exact>Uredi korisnički profil</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="!isInstructor()">Postani instruktor!</router-link>
+      <router-link active-class="active" tag="li" to="/home/start-teaching" exact v-if="!isInstructor()">Postani instruktor!</router-link>
       </div>
-      <div>
-      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Uredi instruktorski profil</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Kalendar i rezervacije</router-link>
+      <div class="float-right" v-if="isInstructor()">
+      <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact >Uredi instruktorski profil</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-courses" exact >Dodaj kolegije</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-calendar" exact >Kalendar i rezervacije</router-link>
       <!-- <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Instruktorske stranice</router-link> -->
       </div>
    </ul>
@@ -22,11 +23,9 @@
 export default {
   methods: {
       isInstructor(){
-        console.log(this.$store.state.instructorId);
-        console.log(this.$store.getters.isInstructor);
           return this.$store.getters.isInstructor;
+        }
       }
-  }
 };
 </script>
 
@@ -73,7 +72,7 @@ nav ul div {
 nav ul div:first-of-type {
   float:left;
 }
-nav ul div:last-of-type {
+.float-right {
   float:right;
 }
 nav ul {

@@ -154,8 +154,6 @@ input {
   display: inline-block;
   margin: 5px;
 }
-input{
-}
 select {
     margin: 5px;
 }

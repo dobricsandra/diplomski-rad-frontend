@@ -2,7 +2,7 @@
 <div class="wrapper">
   <div v-if="readInfo" class="my-instructor-info">
       <p><strong>Stupanj obrazovanja:</strong> {{instructorDetails.degree.name}} ({{instructorDetails.degree.abbreviation}})</p>
-      <p><strong>Držim instrukcije iz:</strong></p>
+      <p v-if="instructorDetails.courses.length"><strong>Držim instrukcije iz:</strong></p>
       <div class="courses" v-for="(course,i) in instructorDetails.courses" v-bind:key="i">
       <p>{{course.name}} ({{course.abbreviation}}) za {{course.faculty.abbreviation}} | {{course.instructor_course.price}} kn/h</p>
         </div>
@@ -21,16 +21,11 @@
             :value="degree.id"
           >{{degree.name}}, {{degree.abbreviation}}</option>
         </select></p>
-
-      <p><strong>Držim instrukcije iz:</strong></p>
-
-      <div class="courses" v-for="(course,i) in instructorDetails.courses" v-bind:key="i">
-          <app-instructor-courses :course="course" :instructorId="instructorDetails.id"></app-instructor-courses>
-      </div>
       
       <p><strong>Lokacija:</strong><br /> <input v-model="instructorDetails.address" maxlength="50" /></p>
       <p><strong>Kratko o meni: </strong><br /> <textarea v-model="instructorDetails.description" maxlength="250"></textarea></p>
       <button @click="saveInstructorData">Spremi</button>
+
   </div>
   <div v-if="showCalendar">
    <h3> Kalendar: </h3>
@@ -70,7 +65,8 @@ export default {
       readInfo: true,
       editInfo: false,
       degrees: [],
-      editCourseMode: false
+      editCourseMode: false,
+      courseAddMenu: false
     };
   },
   methods: {
@@ -84,7 +80,7 @@ export default {
           this.editInfo=false;
       })
       .catch(err=>console.log(err))
-      }
+      },
   },
   components: {
       "app-instructor-calendar": Calendar,
@@ -95,16 +91,17 @@ export default {
 
 <style scoped>
 .wrapper {
-  background-color: white;
-  width: 90%;
+  width: 100%;
+  background-color: rgb(235, 57, 57, 0.2);
   margin: auto;
+  margin-top: 2%;
+  padding-bottom:50px;
 }
 .my-instructor-info {
   display:block;
   width: 80%;
   margin: auto;
   padding: 20px;
-  background-color: rgb(235, 57, 57, 0.2);
   margin-top: 5%;
 }
 .courses{

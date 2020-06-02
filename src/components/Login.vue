@@ -34,7 +34,6 @@ export default {
         password: formData.password
       });
     },
-
   }
 };
 </script>

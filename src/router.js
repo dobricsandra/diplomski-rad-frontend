@@ -11,6 +11,8 @@ import Home from './components/User/Homepage.vue';
 import MyReservations from './components/User/MyReservations.vue';
 import EditProfile from './components/User/EditProfile.vue';
 import EditInstructorProfile from './components/User/EditInstructorProfile.vue';
+import MyCourses from './components/User/MyCourses.vue';
+import BecomeInstructor from './components/User/BecomeInstructor.vue';
 import Dashboard from './components/Admin/Dashboard.vue';
 import Faculties from './components/Admin/Faculties.vue';
 import Cities from './components/Admin/Cities.vue';
@@ -61,11 +63,19 @@ const routes = [
             }, 
             {
                 path: 'my-instructor-profile',
-                component: EditInstructorProfile, 
-                }, 
+                component: EditInstructorProfile
+            }, 
             {
                 path: 'edit-profile',
                 component: EditProfile
+            },
+            {
+                path: 'start-teaching',
+                component: BecomeInstructor
+            },
+            {
+                path: 'my-courses',
+                component: MyCourses
             }
         ]
     },
