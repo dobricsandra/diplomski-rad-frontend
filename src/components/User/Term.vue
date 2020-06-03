@@ -17,6 +17,7 @@ import ReservationDetails from './ReservationDetails.vue';
 export default {
     props: ['id', 'terms'],
     created() {
+        console.log(this.id.status);
         if(this.id.status == 1) {
             axios.get('/isTermReserved/' + this.id.id)
             .then(resData => {

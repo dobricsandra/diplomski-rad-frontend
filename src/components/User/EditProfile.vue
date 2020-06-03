@@ -4,8 +4,8 @@
       <div class="info">
         <p><strong>Ime i prezime:</strong> {{userDetails.name}} {{userDetails.surname}}</p>
         <p><strong>E-mail adresa:</strong> {{userDetails.email}}</p>
-        <p><strong>Prebivalište:</strong> {{userDetails.city.name}}, {{userDetails.city.country.name}}</p>
-        <p><strong>Fakultet:</strong> {{userDetails.faculty.name}}</p>
+        <p><strong>Prebivalište:</strong> {{userDetails.city.name}} ({{userDetails.city.abbreviation}})</p>
+        <p><strong>Fakultet:</strong> {{userDetails.faculty.name}} ({{userDetails.faculty.abbreviation}})</p>
         <p><strong>Broj telefona:</strong> {{userDetails.phoneNumber}}</p>
       </div>
       <div class="profile_picture">
@@ -17,22 +17,19 @@
     <div v-if="editMode" class="user_data">
       <div class="info form">
         <div>
-        <p>Ime:</p>
-        <input v-model="userDetails.name" />
+        <p>Ime:</p><input v-model="userDetails.name" />
         </div>
         <div>
-        <p>Prezime:</p>
-        <input v-model="userDetails.surname" />
+        <p>Prezime:</p><input v-model="userDetails.surname" />
         </div>
         <div>
-        <p>E-mail:</p>
-        <input v-model="userDetails.email" />
+        <p>E-mail:</p><input v-model="userDetails.email" />
         </div>
         <p>Prebivalište:</p>
         <select v-model="userDetails.city.id">
           <option
             v-for="(city, i) in cities"
-            v-bind:key="i"
+            :key="i"
             :value="city.id"
           >{{city.name}}, {{city.abbreviation}}</option>
         </select>
@@ -109,9 +106,15 @@ export default {
               cityId: this.userDetails.city.id
           }
           axios.post('users/'+this.$store.state.userId, user)
-          .then(resData => console.log(resData))
+          .then(resData => {
+            const city = this.cities.find(city => city.id == this.userDetails.city.id);
+            this.userDetails.city.name = city.name;
+            this.userDetails.city.abbreviation = city.abbreviation;
+            const faculty = this.faculties.find(faculty => faculty.id == this.userDetails.faculty.id);
+            this.userDetails.faculty.name = faculty.name;
+            this.userDetails.faculty.abbreviation = faculty.abbreviation;
+          })
           .catch(err => console.log(err))
-          
           this.editMode=false;
       }
   }
@@ -134,7 +137,6 @@ export default {
 .info,
 .profile_picture {
   display: inline-block;
-  width: 42%;
   vertical-align: top;
   padding: 30px;
 }
@@ -146,7 +148,7 @@ img {
   margin-top:3%;
 }
 .show .info p {
-  font-size:25px;
+  font-size:20px;
   margin-bottom:15px;
 }
 p,
@@ -164,9 +166,14 @@ button {
     height:80px;
     margin:auto;
 }
+.info {
+  width:40%;
+  margin-left:13%;
+}
 .profile_picture {
-  float:right;
-  text-align:center;
+  text-align:left;
+  width: 30%;
+  vertical-align: bottom;
 }
 .form div input {
   height: 40px;

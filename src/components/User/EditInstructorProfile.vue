@@ -1,6 +1,7 @@
 <template>
 <div class="wrapper">
   <div v-if="readInfo" class="my-instructor-info">
+    <div class="content">
       <p><strong>Stupanj obrazovanja:</strong> {{instructorDetails.degree.name}} ({{instructorDetails.degree.abbreviation}})</p>
       <p v-if="instructorDetails.courses.length"><strong>Držim instrukcije iz:</strong></p>
       <div class="courses" v-for="(course,i) in instructorDetails.courses" v-bind:key="i">
@@ -8,11 +9,13 @@
         </div>
         <p><strong>Lokacija:</strong> {{instructorDetails.address}}</p>
       <p><strong>Kratko o meni: </strong><br /> {{instructorDetails.description}}</p>
+      </div>
       <button @click="readInfo=false; editInfo=true; showCalendar=false">Izmijeni podatke</button>
-      <button @click="readInfo=false; editInfo=false; showCalendar=true">Uredi kalendar</button>
+      <!-- <button @click="readInfo=false; editInfo=false; showCalendar=true">Uredi kalendar</button> -->
   </div>
 
     <div v-if="editInfo" class="my-instructor-info">
+      <div class="content">
       <p><strong>Stupanj obrazovanja:</strong> 
       <select v-model="instructorDetails.degree.id">
           <option
@@ -24,13 +27,14 @@
       
       <p><strong>Lokacija:</strong><br /> <input v-model="instructorDetails.address" maxlength="50" /></p>
       <p><strong>Kratko o meni: </strong><br /> <textarea v-model="instructorDetails.description" maxlength="250"></textarea></p>
+      </div>
       <button @click="saveInstructorData">Spremi</button>
 
   </div>
-  <div v-if="showCalendar">
+  <!-- <div v-if="showCalendar">
    <h3> Kalendar: </h3>
       <app-instructor-calendar :instructorDetails="instructorDetails"></app-instructor-calendar>
-      </div>
+      </div> -->
 </div>
 </template>
 
@@ -75,6 +79,9 @@ export default {
       axios.post('/instructors/' + this.instructorDetails.id, {address: this.instructorDetails.address, description: this.instructorDetails.description, degreeId: this.instructorDetails.degree.id })
       .then(resData =>
       {
+          const degree = this.degrees.find(degree => degree.id == this.instructorDetails.degree.id);
+          this.instructorDetails.degree.name = degree.name;
+          this.instructorDetails.degree.abbreviation = degree.abbreviation;
           console.log(resData);
           this.readInfo=true; 
           this.editInfo=false;
@@ -94,49 +101,47 @@ export default {
   width: 100%;
   background-color: rgb(235, 57, 57, 0.2);
   margin: auto;
-  margin-top: 2%;
   padding-bottom:50px;
+  margin-top:2%;
 }
 .my-instructor-info {
-  display:block;
-  width: 80%;
-  margin: auto;
+  width:100%;
+  margin:auto;
   padding: 20px;
-  margin-top: 5%;
 }
+
 .courses{
     margin-left: 3%;
 }
-button {
-    margin-top: 20px;
-}
+
 textarea {
     width: 100%;
-    height: 100px;
+    height: 120px;
     font-size: 20px;
 }
 select {
     margin:0px;
 }
-.small-button{
-    width: 120px;
-    height: 30px;
-    display:inline-block;
-    margin: 0px;
-}
-nav {
-    width: 70%;
+
+button {
+    background-color:rgba(198, 56, 63, 0.8);
     margin:auto;
+    margin-top:5%;
+    width: 70%;
+    height:80px;
+    
 }
-nav > button {
-    display: inline-block;
-    width: 30%;
-    margin-top: 20px;
-    margin-bottom:0px;
+.content {
+  width:48%;
+  margin:auto;
+  margin-top:3%;
 }
 h3{
   margin:3% 2%;
   margin-top: 5%;
   font-size: 40px;
+}
+p{
+  font-size:20px;
 }
 </style>

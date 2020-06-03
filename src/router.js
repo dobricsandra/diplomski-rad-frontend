@@ -11,6 +11,7 @@ import Home from './components/User/Homepage.vue';
 import MyReservations from './components/User/MyReservations.vue';
 import EditProfile from './components/User/EditProfile.vue';
 import EditInstructorProfile from './components/User/EditInstructorProfile.vue';
+import InstructorCalendar from './components/User/InstructorCalendar.vue';
 import MyCourses from './components/User/MyCourses.vue';
 import BecomeInstructor from './components/User/BecomeInstructor.vue';
 import Dashboard from './components/Admin/Dashboard.vue';
@@ -76,6 +77,10 @@ const routes = [
             {
                 path: 'my-courses',
                 component: MyCourses
+            },
+            {
+                path: 'my-calendar',
+                component: InstructorCalendar
             }
         ]
     },
