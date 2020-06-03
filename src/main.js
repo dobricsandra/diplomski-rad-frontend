@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import axios from 'axios';
+import { Plugin } from "vue-fragment";
 
 import router from './router';
 import store from './store/store.js';
 import App from './App.vue';
+
+Vue.use(Plugin);
 
 axios.defaults.baseURL = "http://localhost:3000";
 

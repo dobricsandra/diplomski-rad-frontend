@@ -10,7 +10,7 @@
         <router-link active-class="active" tag="li" to="/" exact>Početna</router-link>
         <router-link active-class="active" tag="li" to="/admin/" exact v-if="admin==true">Administrator</router-link>
         <router-link active-class="active" tag="li" to="/signup" exact v-if="!auth">Registracija</router-link>
-        <router-link active-class="active" tag="li" to="/home" exact v-if="auth">Moj profil</router-link>
+        <router-link active-class="active" tag="li" to="/home/my-reservations" exact v-if="auth">Moj profil</router-link>
         <router-link active-class="active" tag="li" to="/help" exact>Pomoć</router-link>
       </ul>
     </nav>

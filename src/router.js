@@ -8,11 +8,12 @@ import InstructorProfile from './components/InstructorProfile.vue';
 import Login from './components/Login.vue';
 import Help from './components/Help.vue';
 import Home from './components/User/Homepage.vue';
-import MyReservations from './components/User/MyReservations.vue';
-import EditProfile from './components/User/EditProfile.vue';
-import EditInstructorProfile from './components/User/EditInstructorProfile.vue';
-import InstructorCalendar from './components/User/InstructorCalendar.vue';
-import MyCourses from './components/User/MyCourses.vue';
+import MyReservations from './components/User/Reservations/Reservations.vue';
+import UserProfile from './components/User/Profile/Profile.vue';
+import MyInstructorProfile from './components/Instructor/Profile/Profile.vue';
+import InstructorCalendar from './components/Instructor/Calendar/Calendar.vue';
+import MyCourses from './components/Instructor/Courses/Courses.vue';
+import AddNewCourse from './components/Instructor/Courses/Create.vue';
 import BecomeInstructor from './components/User/BecomeInstructor.vue';
 import Dashboard from './components/Admin/Dashboard.vue';
 import Faculties from './components/Admin/Faculties.vue';
@@ -64,11 +65,11 @@ const routes = [
             }, 
             {
                 path: 'my-instructor-profile',
-                component: EditInstructorProfile
+                component: MyInstructorProfile
             }, 
             {
                 path: 'edit-profile',
-                component: EditProfile
+                component: UserProfile
             },
             {
                 path: 'start-teaching',
@@ -77,6 +78,10 @@ const routes = [
             {
                 path: 'my-courses',
                 component: MyCourses
+            },
+            {
+                path: 'my-courses/add-new-course', 
+                component: AddNewCourse
             },
             {
                 path: 'my-calendar',

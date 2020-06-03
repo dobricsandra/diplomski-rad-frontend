@@ -65,7 +65,7 @@ export default {
           axios.post('/instructors', {address:this.address, description: this.description, degreeId: this.degreeId})
           .then(resData => {
               this.$store.dispatch("checkIsInstructor");
-              this.$router.push('/home/my-instructor-profile');
+              this.$router.push('/home/my-courses');
           })
           .catch(err => console.log(err))
       }

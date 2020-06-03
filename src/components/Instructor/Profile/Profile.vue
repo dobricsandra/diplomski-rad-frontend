@@ -11,7 +11,6 @@
       <p><strong>Kratko o meni: </strong><br /> {{instructorDetails.description}}</p>
       </div>
       <button @click="readInfo=false; editInfo=true; showCalendar=false">Izmijeni podatke</button>
-      <!-- <button @click="readInfo=false; editInfo=false; showCalendar=true">Uredi kalendar</button> -->
   </div>
 
     <div v-if="editInfo" class="my-instructor-info">
@@ -31,17 +30,12 @@
       <button @click="saveInstructorData">Spremi</button>
 
   </div>
-  <!-- <div v-if="showCalendar">
-   <h3> Kalendar: </h3>
-      <app-instructor-calendar :instructorDetails="instructorDetails"></app-instructor-calendar>
-      </div> -->
+
 </div>
 </template>
 
 <script>
 import axios from "axios";
-import Calendar from './InstructorCalendar.vue';
-import InstructorCourses from './InstructorCourses.vue';
 export default {
   created() {
      axios
@@ -88,10 +82,6 @@ export default {
       })
       .catch(err=>console.log(err))
       },
-  },
-  components: {
-      "app-instructor-calendar": Calendar,
-      "app-instructor-courses": InstructorCourses
   }
 };
 </script>

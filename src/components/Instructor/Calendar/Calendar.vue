@@ -4,7 +4,7 @@
     <div class="legend"><div class="icon white"></div>Slobodni termini</div>
     <div class="legend"><div class="icon red"></div>Rezervirani termini</div>
     <div class="timetable">
-      <table v-if="instructorDetails.length" id="timetable_table">
+      <table v-if="instructorDetails.length || startCalendar==true" id="timetable_table">
         <tr>
           <th
             v-for="(day, i) in next7Days"
@@ -66,15 +66,24 @@ export default {
     axios
       .get("/term")
       .then(resData => {
+          if(resData.status == 204){
+              this.startCalendar = true;
+              return;
+          }
         this.instructorDetails = resData.data;
+        this.startCalendar = false;
+
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+           console.log(err)
+          });
   },
   data() {
     return {
       next7Days: [],
       startTime: "",
-      instructorDetails: {}
+      instructorDetails: {},
+      startCalendar: false
     };
   },
   methods: {
@@ -90,18 +99,14 @@ export default {
         month = "0" + month;
       }
       startTime = year + "" + month + "" + day + "" + hour;
-      if (this.instructorDetails.length > 0) {
+      if (this.instructorDetails.length > 0 && this.startCalendar==false) {
         if (this.instructorDetails.some(term => term.startTime == startTime)) {
-          console.log("spreman sam");
-
           return { id: startTime, status: 1 }; // this means it is a free term
         } else {
           return { id: startTime, status: 3 }; // this means it is an unvailable term
         }
       } 
       else {
-        console.log("zasto bismo usli ovdje");
-
         return { id: startTime, status: 3 }; // this means it is an unvailable term
       }
     }
