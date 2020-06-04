@@ -15,10 +15,10 @@ export default {
 
 <style scoped>
 div{ 
-  background-color: white;
-  opacity: 0.85;
+    background-color: rgba(255, 255, 255, 0.9);
   width: 85%;
   margin: 1% auto;
-  padding: 3%;}
+  padding: 2% 4%;
+}
  
 </style>

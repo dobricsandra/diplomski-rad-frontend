@@ -11,9 +11,11 @@ export default {
   components: {
     "app-user-navigation": UserNavigationVue
   },
+
   created() {
-      this.$store.dispatch('checkIsInstructor');
-      console.log(this.$store.state.instructorId);
+    // we removed this from here because we put it in app.vue
+      // this.$store.dispatch('checkIsInstructor');
+      // console.log(this.$store.state.instructorId);
   }
   
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="my-courses">
-<div v-if="!courses.length" class="row">Niste odabrali nijedan kolegij! </div>
+<div v-if="!courses.length && loaded" class="row">Niste odabrali nijedan kolegij! </div>
     <div v-if="courses.length" class="row">
         <div class="col"> <p>Naziv kolegija</p></div>
         <div class="col"> <p>Fakultet</p></div>
@@ -29,8 +29,10 @@ export default {
         for (let id in resData.data.courses) {
           this.courses.push(resData.data.courses[id]);
         }
+        this.loaded = true;
       })
       .catch(err => console.log(err));
+   
   },
 
   data() {
@@ -38,7 +40,8 @@ export default {
       editCourseMode: false,
       courses: [],
       courseAddMenu: false,
-      instructorId: ""
+      instructorId: "",
+      loaded: false
     };
   },
   methods: {

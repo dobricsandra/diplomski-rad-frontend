@@ -40,7 +40,7 @@ const routes = [
     // routes everybody can access (without login)
     { path: '', component: Search },
     { path: '/signup', component: Signup },
-    { path: '/searchResults/:id', component: SearchResults },
+    { path: '/searchResults', component: SearchResults },
     { path: '/instructor-profile/:id', component: InstructorProfile },
     { path: '/login', component: Login },
     { path: '/help', component: Help },

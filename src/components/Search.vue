@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <form @submit.prevent="search">
-      <p>Pronađite instrukcije</p>
+  <div class="wrapper">
+    <div class="form">
       <label>Studiram na...:</label>
       <select @change="getCourses()" v-model="facultyId">
         <option
@@ -27,8 +26,8 @@
         >{{city.name}}, {{city.abbreviation}}</option>
       </select>
 
-      <button type="submit" @click= "confirmed=true">Pretraži</button>
-    </form>
+      <button type="submit" @click="search()">Pretraži</button>
+    </div>
   </div>
 </template>
 
@@ -70,8 +69,7 @@ export default {
       faculties: [],
       courses: [],
       cities: [],
-      isDisabled: true,
-      confirmed: false
+      isDisabled: true
     };
   },
   methods: {
@@ -95,36 +93,25 @@ export default {
         });
     },
     search() {
-      this.$router.push("/searchResults/" + this.courseId);
+      console.log(this.courseId);
+      this.$router.push({path: "/searchResults",  query: { courseId: this.courseId, cityId: this.cityId }});
     }
   },
-//     beforeRouteLeave(to, from, next) {
-//       if (this.confirmed) {
-//         next();
-//       } else {
-//         if (confirm("Jeste li sigurni?")) {
-//           next();
-//         } else {
-//           next(false);
-//         }
-//       }
-//     }
-  
 };
 </script>
 
 <style scoped>
-div {
+.wrapper {
   max-width: 800px;
   width: 100%;
-  height: 700px;
+  height: 430px;
   background-color: white;
   margin: auto;
   margin-top: 3%;
   border-radius: 25px;
 }
 
-form {
+.form {
   width: 400px;
   margin: auto;
   margin-top: 5%;
@@ -133,9 +120,10 @@ form {
 select,
 input {
   height: 35px;
-  margin-bottom: 2%;
+  margin-bottom: 5%;
   margin-top: 2%;
   padding-left: 15px;
   font-size: 16px;
 }
+
 </style>

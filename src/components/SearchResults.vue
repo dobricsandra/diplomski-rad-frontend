@@ -20,8 +20,12 @@ import axios from "axios";
 
 export default {
   created() {
+    
+console.log(this.$route.query.cityId);
+console.log(this.$route.query.courseId);
+
     axios
-      .get("/courses/"+this.$route.params.id+"/instructors")
+      .get("/courses/"+this.$route.query.courseId+"/instructors")
       .then(resData => {
         console.log(resData);
         const instructors = [];
