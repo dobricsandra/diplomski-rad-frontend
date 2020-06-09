@@ -2,13 +2,13 @@
   <div>
       <div class="instructions_result_item">
       <h4>{{instructor.user.name}} {{instructor.user.surname}} </h4>
-      <p>{{instructor.user.faculty.abbreviation}}, {{instructor.degree.abbreviation}} </p>
-
+      <p>{{instructor.user.city.name}} </p>
       <img
         src="https://cdn3.vectorstock.com/i/1000x1000/08/37/profile-icon-male-user-person-avatar-symbol-vector-20910837.jpg"
       />
+      <p>{{instructor.user.faculty.abbreviation}}, {{instructor.degree.abbreviation}} </p>
       <p>{{averageMark}}</p>
-      <button @click="submit">Više...</button>
+      <button @click="$router.push('/instructor-profile/' + instructorId)">Više...</button>
       </div>
    
   </div>
@@ -74,12 +74,29 @@ export default {
   margin-left: 1.5%;
 }
 
-p:last-of-type {
-  margin-bottom: 10px;
-}
-
 .instructions_result_item img {
   max-width: 100px;
   width: 100%;
+  margin: 8px 0px;
+}
+button {
+    background-color:rgba(198, 56, 63, 0.8);
+    margin: 5px;
+    width: 70%;
+    height:40px;
+    margin:auto;
+    margin-bottom:10px;
+    margin-top: 10px;
+}
+button:hover{
+  background-color:orangered;
+  text-decoration: underline;
+}
+h4 {
+  margin-bottom:5px;
+}
+p{
+  margin-top:2px;
+  margin-bottom: 8px;
 }
 </style>

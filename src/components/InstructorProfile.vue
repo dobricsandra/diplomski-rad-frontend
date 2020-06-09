@@ -1,12 +1,16 @@
 <template>
-<div>
-  <div class="instructor_intro">
-    <div class="basic_info">
-      <p>{{instructorDetails.user.name}} {{instructorDetails.user.surname}}</p>
+<div class="wrapper">
+   <h3>{{instructorDetails.user.name}} {{instructorDetails.user.surname}}</h3>
       <p>{{instructorDetails.degree.abbreviation}}, {{instructorDetails.user.faculty.abbreviation}}</p>
-      <p>Lokacija: {{instructorDetails.address}}</p>
-      <p>Ocjena: {{averageMark}} ({{numberOfReviews}} glasova)</p>
-      <button id="send_message_to_instructor">Pošalji poruku</button>
+  <div class="instructor_intro">
+         
+      <div class="col">
+      
+      <p><strong>Držim instrukcije u: </strong> {{instructorDetails.user.city.name}}, {{instructorDetails.address}}</p>
+      <p class="contact"><strong>mail: </strong>{{instructorDetails.user.email}}</p>
+      <p class="contact"><strong>tel.: </strong>{{instructorDetails.user.phoneNumber}}</p>
+      <p><strong>Ocjena:</strong> {{averageMark}} ({{numberOfReviews}} glasova)</p>
+      <!-- <button id="send_message_to_instructor">Pošalji poruku</button> -->
       <!-- <div id="myModal" class="modal">
                         <div class="modal-content">
                             <span id="close" class="close">&times;</span>
@@ -18,19 +22,19 @@
       </div>-->
 
     </div>
-    <div class="instructor_picture">
-      <img src="https://www.dictionary.com/e/wp-content/uploads/2019/09/vscogirl1000x700.jpg" />
-    </div>
-    <div class="details_info">
+    <div class="col">
       <p>Držim instrukcije iz:</p>
       <div v-for="(course,i) in instructorDetails.courses" v-bind:key="i">
       <p>{{course.name}} ({{course.abbreviation}}) - {{course.faculty.abbreviation}} | {{course.instructor_course.price}} kn/h</p>
         </div>
       <br />
-      <p>Kratko o meni: <br /> {{instructorDetails.description}}</p>
     </div>
-    
+    <div class="col">
+    <p><strong>O meni: </strong><i>"{{instructorDetails.description}}"</i></p>
+    </div>
   </div>
+
+
    <h3> Slobodni termini: </h3>
       <app-instructor-calendar :instructorDetails="instructorDetails"></app-instructor-calendar>
       </div>
@@ -40,7 +44,7 @@
 
 <script>
 import axios from "axios";
-import Calendar from './Calendar.vue';
+import Calendar from './InstructorCalendar.vue';
 export default {
   created() {
     axios
@@ -81,44 +85,48 @@ export default {
 </script>
 
 <style scoped>
-div {
-  background-color: white;
+
+.wrapper {
+  background-color: rgba(255, 255, 255, 0.9);
   width: 85%;
-  margin: auto;
+  margin: 1% auto;
+  padding: 2% 4%;
 }
 .instructor_intro {
-  width: 85%;
-  margin: auto;
-  padding: 20px;
+  width: 90%;
+  padding: 15px 40px;
   vertical-align: top;
   display: flex;
+  background-color: rgb(235, 57, 57, 0.2);
+  margin: auto;
+  margin-top: 1%;
 }
-.basic_info,
-.details_info,
-.instructor_picture {
+.col
+{
   display: inline-block;
+  width: 33%;
+  text-align:left
 }
 
-.basic_info {
-  width: 20%;
-}
 
-.basic_info button {
+
+/* .basic_info button {
   margin-top: 4%;
   width: 70%;
-}
-.instructor_picture {
-  width: 30%;
-}
-.instructor_picture img {
-  height: 165px;
-}
+} */
 
-.details_info {
-  width: 50%;
-}
+
 h3 {
-  margin: 2% 4%;
-  font-size: 30px;
+  font-size: 25px;
+  margin:0px;
+  margin-top: 1.5%
+
+}
+p {
+  margin: 0px;
+  margin-bottom: 5px;
+}
+.contact {
+  margin-left: 30px;
 }
 </style>

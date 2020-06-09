@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
-    <div class="form">
-      <label>Studiram na...:</label>
+  <div class="search">
+    <div>
+      <label>Fakultet:</label>
       <select @change="getCourses()" v-model="facultyId">
         <option
           v-for="(faculty, i) in faculties"
@@ -9,7 +9,7 @@
           :value="faculty.id"
         >{{faculty.name}}, {{faculty.abbreviation}}</option>
       </select>
-      <label>Trebaju mi instrukcije iz...:</label>
+      <label>Kolegij:</label>
       <select v-model="courseId" :disabled="isDisabled">
         <option
           v-for="(course, i) in courses"
@@ -17,7 +17,7 @@
           :value="course.id"
         >{{course.name}}, {{course.abbreviation}}</option>
       </select>
-      <label>Nalazim se u ...:</label>
+      <label>Grad:</label>
       <select v-model="cityId">
         <option
           v-for="(city, i) in cities"
@@ -25,10 +25,11 @@
           :value="city.id"
         >{{city.name}}, {{city.abbreviation}}</option>
       </select>
-
       <button type="submit" @click="search()">Pretraži</button>
     </div>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
+
 </template>
 
 <script>
@@ -94,7 +95,7 @@ export default {
     },
     search() {
       console.log(this.courseId);
-      this.$router.push({path: "/searchResults",  query: { courseId: this.courseId, cityId: this.cityId }});
+      this.$router.push({path: "/search/results",  query: { courseId: this.courseId, cityId: this.cityId }});
     }
   },
 };
@@ -111,19 +112,28 @@ export default {
   border-radius: 25px;
 }
 
-.form {
-  width: 400px;
-  margin: auto;
-  margin-top: 5%;
-}
+.search {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 85%;
+  margin: 1% auto;
+  padding: 2% 4%;
 
+}
 select,
 input {
+  display:inline-block;
   height: 35px;
-  margin-bottom: 5%;
-  margin-top: 2%;
   padding-left: 15px;
   font-size: 16px;
+  width: 20%;
+  margin:15px;
 }
-
+label, button {
+  display:inline-block;
+}
+button {
+  height: 40px;
+  width: 200px;
+  margin:0px;
+}
 </style>

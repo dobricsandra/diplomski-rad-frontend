@@ -1,17 +1,19 @@
 <template>
   <div>
     <form @submit.prevent="signUp">
-      <p>{{userCreatedMessage}}</p>
       <label>E-mail:</label>
-      <input placeholder="npr. primjer@primjer.hr" type="text" v-model="email" required />
+      <input :class="{invalid:$v.email.$error}" placeholder="npr. primjer@primjer.hr" type="text" v-model="email" @input="$v.email.$touch()" />
+      <p class="invalid" v-if="!$v.email.email">E-mail mora biti u ispravnom formatu!</p>
       <label>Lozinka:</label>
-      <input type="password" v-model="password" required />
+      <input :class="{invalid:$v.password.$error}" type="password" v-model="password" required @input="$v.password.$touch()" />
+      <p class="invalid" v-if="!$v.password.minLength">Lozinka mora imati najmanje 6 znakova!</p>
       <label>Ime:</label>
-      <input type="text" v-model="name" required />
+      <input :class="{invalid:$v.name.$error}" type="text" v-model="name" required @input="$v.name.$touch()" />
       <label>Prezime:</label>
-      <input type="text" v-model="surname" required />
+      <input :class="{invalid:$v.surname.$error}" type="text" v-model="surname" required @input="$v.surname.$touch()" />
       <label>Broj mobitela:</label>
-      <input type="text" placeholder="npr. 0912512969" v-model="phoneNumber" required />
+      <input :class="{invalid:$v.phoneNumber.$error}" type="text" placeholder="npr. 0912512969" v-model="phoneNumber" required @input="$v.phoneNumber.$touch()" />
+      <p class="invalid" v-if="!$v.phoneNumber.minLength || !$v.phoneNumber.maxLength ">Unesite ispravan broj mobitela!</p>
       <label>Studiram/studirao sam na...:</label>
       <select v-model="facultyId">
         <option
@@ -36,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import { required, email, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   created() {
@@ -74,8 +77,30 @@ export default {
       facultyId: "",
       cityId: "",
       faculties: [],
-      cities: [],
+      cities: []
     };
+  },
+  validations: {
+    email: {
+      required,
+      email,
+      minLength: minLength(5)
+    },
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    name: {
+      required,
+    },
+    surname: {
+      required,
+    },
+    phoneNumber: {
+      required,
+      minLength: minLength(9),
+      maxLength: minLength(10)
+    }
   },
   methods: {
     signUp() {
@@ -85,14 +110,18 @@ export default {
         name: this.name,
         surname: this.surname,
         phoneNumber: this.phoneNumber,
-        picture: "https://cdn4.iconfinder.com/data/icons/avatars-circle-2/72/146-512.png", // TODO: change this both here and in API
+        picture:
+          "https://cdn4.iconfinder.com/data/icons/avatars-circle-2/72/146-512.png", // TODO: change this both here and in API
         facultyId: this.facultyId,
         cityId: this.cityId
       };
       console.log(user);
       axios
         .post("/signup", user)
-        .then(resData => console.log(resData))
+        .then(resData => {
+          console.log(resData);
+          this.$router.push('/login');
+          })
         .catch(err => console.log(err));
     }
   }
@@ -124,4 +153,14 @@ input {
   padding-left: 15px;
   font-size: 16px;
 }
+
+input.invalid {
+  border: 1px solid red;
+}
+
+p.invalid {
+  color: red;
+  font-size: 12px;
+}
+
 </style>

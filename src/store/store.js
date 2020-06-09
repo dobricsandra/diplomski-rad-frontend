@@ -42,8 +42,11 @@ export default new Vuex.Store({
         },
 
         login({ commit, dispatch, state }, authData) {
+            
             axios.post('/login', { email: authData.email, password: authData.password })
                 .then(resData => {
+                    console.log("usli smo");
+                    console.log(resData);
                     commit('authUser', {
                         token: resData.data.token,
                         userId: resData.data.userId,

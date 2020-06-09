@@ -9,8 +9,8 @@
       </div>
       <div class="float-right" v-if="isInstructor()">
       <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact >Uredi instruktorski profil</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-courses" exact >Dodaj kolegije</router-link>
-      <router-link active-class="active" tag="li" to="/home/my-calendar" exact >Kalendar i rezervacije</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-courses" >Dodaj kolegije</router-link>
+      <router-link active-class="active" tag="li" to="/home/my-calendar" >Kalendar i rezervacije</router-link>
       <!-- <router-link active-class="active" tag="li" to="/home/my-instructor-profile" exact v-if="isInstructor()">Instruktorske stranice</router-link> -->
       </div>
    </ul>

@@ -1,12 +1,11 @@
 <template>
   <nav>
     <ul class="nav_ul">
-      <router-link active-class="active" tag="li" to="/admin/cities" exact>Države</router-link>
-      <router-link active-class="active" tag="li" to="/admin/cities" exact>Gradovi</router-link>
-      <router-link active-class="active" tag="li" to="/admin/faculties" exact>Fakulteti</router-link>
-      <router-link active-class="active" tag="li" to="/admin/faculties" exact>Kolegiji</router-link>
-      <router-link active-class="active" tag="li" to="/admin/faculties" exact>Stupnjevi obrazovanja</router-link>
-      <router-link active-class="active" tag="li" to="/admin/faculties" exact>Fakulteti</router-link>
+      <!-- <router-link active-class="active" tag="li" to="/admin/countries" >Države</router-link> -->
+      <router-link active-class="active" tag="li" to="/admin/cities" >Gradovi</router-link>
+      <router-link active-class="active" tag="li" to="/admin/faculties" >Fakulteti</router-link>
+      <router-link active-class="active" tag="li" to="/admin/courses" >Kolegiji</router-link>
+      <!-- <router-link active-class="active" tag="li" to="/admin/degrees" exact>Stupnjevi obrazovanja</router-link> -->
     </ul>
     <router-view></router-view>
   </nav>

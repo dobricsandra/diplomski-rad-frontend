@@ -16,8 +16,15 @@ import MyCourses from './components/Instructor/Courses/Courses.vue';
 import AddNewCourse from './components/Instructor/Courses/Create.vue';
 import BecomeInstructor from './components/User/BecomeInstructor.vue';
 import Dashboard from './components/Admin/Dashboard.vue';
-import Faculties from './components/Admin/Faculties.vue';
-import Cities from './components/Admin/Cities.vue';
+import Cities from './components/Admin/Cities/Cities.vue';
+import AddNewCity from './components/Admin/Cities/Create.vue';
+import AddFacultyToCity from './components/Admin/Cities/CreateFaculty.vue';
+import Faculties from './components/Admin/Faculties/Faculties.vue';
+import AddNewFaculty from './components/Admin/Faculties/Create.vue';
+import AddCourseToFaculty from './components/Admin/Faculties/CreateCourse.vue';
+import Courses from './components/Admin/Courses/Courses.vue';
+import AdminAddNewCourse from './components/Admin/Courses/Create.vue';
+
 
 import store from './store/store.js';
 
@@ -38,9 +45,13 @@ const Signup = resolve => {
 const routes = [
 
     // routes everybody can access (without login)
-    { path: '', component: Search },
+    { path: '/search', component: Search, children: [
+        {
+            path: 'results', component:SearchResults
+        }
+    ] },
     { path: '/signup', component: Signup },
-    { path: '/searchResults', component: SearchResults },
+    // { path: '/searchResults', component: SearchResults },
     { path: '/instructor-profile/:id', component: InstructorProfile },
     { path: '/login', component: Login },
     { path: '/help', component: Help },
@@ -96,11 +107,39 @@ const routes = [
             component: Faculties
         }, 
         {
-            path: 'courses',
+            path: 'cities',
             component: Cities, 
-            }
+            },
+        {
+            path: 'cities/add-new-city',
+            component: AddNewCity, 
+            },
+        {
+            path: 'cities/:id/add-faculty',
+            component: AddFacultyToCity, 
+        },
+        {
+            path: 'faculties',
+            component: Faculties, 
+            },
+        {
+            path: 'faculties/add-new-faculty',
+            component: AddNewFaculty, 
+            },
+        {
+            path: 'faculties/:id/add-course',
+            component: AddCourseToFaculty, 
+            },
+        {
+            path: 'courses',
+            component: Courses, 
+            },
+        {
+            path: 'courses/add-new-course',
+            component: AdminAddNewCourse, 
+            },
     ]},
-    { path: '*', redirect: '/' }
+    { path: '*', redirect: '/login' }
 ];
 
 export default new VueRouter({ mode: 'history', routes }) // mode:history removes #/ after url

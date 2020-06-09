@@ -31,7 +31,7 @@ export default {
         this.price = this.course.instructor_course.price;
     },
     methods: {
-        saveNewPrice(courseId, price) {
+        saveNewPrice() {
            axios.post('/changePrice', {userId: this.$store.state.userId, courseId: this.course.id, price: this.price})
             .then(resData => {
                 console.log(resData);

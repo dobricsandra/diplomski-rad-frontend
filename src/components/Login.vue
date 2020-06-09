@@ -5,7 +5,7 @@
       <input type="text" id="email" v-model="email" />
       <label>Lozinka:</label>
       <input type="password" id="password" v-model="password" />
-      <button type="submit">Prijavi se</button>
+      <button @click="login()" type="submit">Prijavi se</button>
       <p>Zaboravili ste lozinku?</p>
       <p>
         Nemate korisnički račun?

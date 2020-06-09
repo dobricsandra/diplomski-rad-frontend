@@ -64,19 +64,5 @@ main button {
     cursor: pointer;
 }
 
-h1, h2 {
- 
-}
 
-ul {
-
-}
-
-li {
-
-}
-
-a {
-  
-}
 </style>

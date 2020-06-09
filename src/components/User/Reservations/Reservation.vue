@@ -42,7 +42,9 @@ export default {
           return true;
         }
         console.log(resData.data);
-        //document.getElementById(resData.data.mark).style.backgroundColor = "blue";
+        if(document.getElementById(resData.data.mark)){
+          document.getElementById(resData.data.mark).style.backgroundColor = "red";
+        }
         return false;
       })
       .then(err => {
@@ -69,56 +71,43 @@ export default {
       }
       return false;
     },
-    firstReview() {
+    postReview() {
+      if(!confirm('Jeste li sigurni da želite ocijeniti instruktora ocjenom ' + event.target.id +'?' )){
+        return;
+      }
+      const mark = event.target.id;
       axios
         .get("/getReviewFromUser/" + this.reservation.term.instructor.id)
         .then(resData => {
-          if (resData.data.status == 0) {
+          if (resData.data.status === 0) {
             console.log(resData.data);
-            return true;
-          }
-          console.log(resData.data);
-          document.getElementById(resData.data.mark).style.backgroundColor =
-            "blue";
-          return false;
-        })
-        .then(err => {
-          console.log(err);
-        });
-    },
-    postReview() {
-      const mark = event.target.id;
-      if (this.firstReview()) {
-        console.log(this.firstReview());
-        console.log("prvi put");
-        axios
-          .post("/reviews/" + this.reservation.term.instructor.id, {
-            mark: mark
-          })
-          .then(resData => {
-            console.log(resData);
-            console.log(mark);
-            document.getElementById(mark).style.backgroundColor = "green";
-          })
-          .then(err => console.log(err));
-      } else {
-        console.log("drugi put");
-        axios
+             axios.post("/reviews/" + this.reservation.term.instructor.id, { mark: mark })
+             .then(resData => {
+              console.log(resData);
+              console.log(mark);
+              document.getElementById(mark).style.backgroundColor = "red";
+              })
+              .catch(err => console.log(err))
+              }
+          else {
+             axios
           .post("/editreview/" + this.reservation.term.instructor.id, {
-            mark: mark
-          })
+            mark: mark})
           .then(resData => {
             console.log(resData);
             for (let i = 0; i < 5; i++) {
               document.getElementsByClassName("rate")[i].style.backgroundColor =
                 "grey";
             }
-            document.getElementById(mark).style.backgroundColor = "blue";
+            document.getElementById(mark).style.backgroundColor = "red";
           })
-          .then(err => console.log(err));
-      }
-    }
-  }
+          .catch(err => console.log(err));
+          }
+        })
+      
+      
+    }}
+  
 };
 </script>
 
@@ -129,7 +118,7 @@ h3 {
 }
 .cancelled {
   background-color: #c402029e;
-  padding:25px;
+  padding: 25px;
 }
 .cancelled span {
   font-size: 30px;
@@ -138,7 +127,7 @@ h3 {
 }
 .active {
   margin-top: 2%;
-  background-color:rgba(26, 167, 26, 0.59);
+  background-color: rgba(26, 167, 26, 0.59);
   padding: 5px;
 }
 button {
@@ -161,7 +150,7 @@ button {
 .cancel-button {
   width: 100%;
   height: 80px;
-  background-color:#cb4c4c;
+  background-color: #cb4c4c;
 }
 .active > div {
   display: inline-block;
@@ -175,7 +164,7 @@ button {
   margin-right: 3%;
 }
 .wrapper {
-    display:inline;
-    vertical-align:top;
+  display: inline;
+  vertical-align: top;
 }
 </style>
